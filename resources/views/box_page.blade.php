@@ -34,7 +34,6 @@
                     <span>Tambah</span>
                 </button>
             </form>
-
             <div class="row" style="margin-top: 20px; ">
                 <div class="col-md-3">
                     <button type="button" class="btn btn-icon btn-primary" id="SaveData">
@@ -67,9 +66,6 @@
 
         </div>
     </div>
-    <style>
-
-    </style>
 @endsection
 @section('javascript')
     <script type="text/javascript" src="./repeater.js"></script>
@@ -87,7 +83,6 @@
             });
         });
         $(document).ready(function () {
-
             $('section').chainFade({
                 speed: 500,
                 interval: 50
@@ -96,29 +91,31 @@
                 var dataarray = $('.data-repeater').repeaterVal()
                 dataarray.data = dataarray.data.sort(() => Math.random() - 0.5)
                 // var dataarray1 = dynamicgenerator(dataarray.data,"data");
-                var tbody = document.getElementById('resultData');
-                $("#resultData").empty();
-                var no = 0
-                var data = "";
-                for (var i = 0; i < dataarray.data.length; i++) {
-                    no = i + 1;
-                    var color = Math.floor(Math.random() * 16777215).toString(16);
-                    /* Must not forget the $ sign */
 
-                    data = "<div class='box' onclick='getcustomer(this);' " +
-                        "data-id='" + dataarray.data[i].data + "' data-color='" + color + "' " +
-                        "style='position: relative;background-color: #" + color + "'>" +
-                        "<p style='position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);background-color: #f9f2f4;font-size: 25px;'>" + no + "</p></div>";
+                    var tbody = document.getElementById('resultData');
+                    $("#resultData").empty();
+                    var no = 0
+                    var data = "";
+                    for (var i = 0; i < dataarray.data.length; i++) {
+                        no = i + 1;
+                        var color = Math.floor(Math.random() * 16777215).toString(16);
+                        /* Must not forget the $ sign */
 
-                    /* We add the table row to the table body */
-                    tbody.innerHTML += data;
-                    if (no == dataarray.data.length) {
-                        var clientHeight = document.getElementById('resultData').clientHeight
-                        $("section").css('height', parseInt(clientHeight + 40) + "px");
-                        $("section").css('display', "block");
-                        $(".box").css('transform', "scale(1.0)");
+                        data = "<div class='box' onclick='getcustomer(this);' " +
+                            "data-id='" + dataarray.data[i].data + "' data-color='" + color + "' " +
+                            "style='position: relative;background-color: #" + color + "'>" +
+                            "<p style='position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);background-color: #f9f2f4;font-size: 25px;'>" + no + "</p></div>";
+
+                        /* We add the table row to the table body */
+                        tbody.innerHTML += data;
+                        if (no == dataarray.data.length) {
+                            var clientHeight = document.getElementById('resultData').clientHeight
+                            $("section").css('height', parseInt(clientHeight + 40) + "px");
+                            $("section").css('display', "block");
+                            $(".box").css('transform', "scale(1.0)");
+                        }
                     }
-                }
+
             });
 
             $('.data-repeater').repeater({
@@ -143,10 +140,12 @@
         });
 
         function getcustomer(elem) {
+
             var id = $(elem).data('id');
             var color = $(elem).data('color');
             $(".hover_bkgr_fricc > div").css('background-color', "#" + color);
-            $(".trigger_popup_fricc").trigger('click');
+            $('.hover_bkgr_fricc').show();
+            // $(".trigger_popup_fricc").trigger('click');
             $("#pop-up-text").empty();
             var elemt = document.getElementById("pop-up-text");
             var text = document.createTextNode(id);

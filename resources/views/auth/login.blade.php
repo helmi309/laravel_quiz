@@ -5,8 +5,9 @@
   <div class="row align-items-center">
     <div class="col-md-9 ml-auto mr-auto mb-3 text-center">
       <a class="img-holder switch-trigger" href="javascript:void(0)">
-        <img src="{{ asset('quickadmin') }}/images/1.png">
+        <div style="color: white;font-size: 50px;  font-weight: bold;">{{ __('G-BRAND') }} </div>
       </a>
+
       <h3 style="color: white;">{{ __('Selamat Datang di Aplikasi Pembelajaran Daring') }} </h3>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
