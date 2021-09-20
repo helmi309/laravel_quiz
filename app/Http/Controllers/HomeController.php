@@ -36,70 +36,110 @@ class HomeController extends Controller
         $users = User::whereNull('role_id')->count();
         $quizzes = Test::count();
         $average = Test::avg('result');
-        $results  =  User::select('role_id')
-                    ->where('id', '=', Auth::id())
-                    ->first();
+        $results = User::select('role_id')
+            ->where('id', '=', Auth::id())
+            ->first();
 
-        $class  =   DB::table('class')
-                    ->where('users_id', '=', Auth::id())
-                    ->where('taken', '=', NULL)
-                    ->get();
+        $class = DB::table('class')
+            ->where('users_id', '=', Auth::id())
+            ->where('taken', '=', NULL)
+            ->get();
 
 
-                    // return($class);
-        if($results->role_id == NULL || $results->role_id > 1){
+        // return($class);
+        if ($results->role_id == NULL || $results->role_id > 1) {
             $topic = DB::table('topics')
-                    ->where('semua', '=', "semua")
-                    ->get();
-                    // $topik = $topic;
-                    // foreach ($topik as $key => $row) {
-                    //     $class[] = 
-                    //         array('topics_id' => $row->id,
-                    //         'topics_title' => $row->title,
-                    //         'text' => $row->title);
-                    // }
-                    // return($topic);
+                ->where('semua', '=', "semua")
+                ->get();
+            // $topik = $topic;
+            // foreach ($topik as $key => $row) {
+            //     $class[] =
+            //         array('topics_id' => $row->id,
+            //         'topics_title' => $row->title,
+            //         'text' => $row->title);
+            // }
+            // return($topic);
             return view('home_users', compact('questions', 'users', 'quizzes', 'average', 'class', 'topic'));
-        }else{
-            $jml_topic  = DB::table('topics')
-                    ->select('*')
-                    ->where("deleted_at", "=", NULL)
-                    ->count();
-            $jml_usr  =DB::table('users')
-                    ->where('role_id', '!=', '1')
-                    ->count();
-            $jml_dsn  =DB::table('users')
-                    ->where('role_id', '=', '1')
-                    ->count(); 
-            $jml_test  =DB::table('view_count_test')
-                    ->select('count(DISTINCT(topic_id))')
-                    ->where('deleted_at', '=', NULL)
-                    ->count();                       
-                    // return($jml_test);
+        } else {
+            $jml_topic = DB::table('topics')
+                ->select('*')
+                ->where("deleted_at", "=", NULL)
+                ->count();
+            $jml_usr = DB::table('users')
+                ->where('role_id', '!=', '1')
+                ->count();
+            $jml_dsn = DB::table('users')
+                ->where('role_id', '=', '1')
+                ->count();
+            $jml_test = DB::table('view_count_test')
+                ->select('count(DISTINCT(topic_id))')
+                ->where('deleted_at', '=', NULL)
+                ->count();
+            // return($jml_test);
             return view('home', compact('questions', 'users', 'quizzes', 'average', 'jml_topic', 'jml_usr', 'jml_dsn', 'jml_test'));
         }
     }
+
     public function luckyDraw()
     {
-        $class_get = DB::table('class')
-            ->select('topics_title')
-            ->groupBy('topics_title')
+
+        $lucky = DB::table('lucky')
+            ->select('lucky.*')
             ->get();
-        return view('lucky_draw', compact('class_get'));
+        return view('lucky_draw', compact('lucky'));
     }
+
     public function getUsersByClass($id)
     {
         $users_get = DB::table('class')
             ->join('users', 'users.id', '=', 'class.users_id')
-            ->select('users.*','class.topics_title')
-            ->where('class.topics_title',$id)
+            ->select('users.*', 'class.topics_title')
+            ->where('class.topics_title', $id)
             ->get();
-        return response()->json(['status'=>"success", 'response'=>$users_get]);
+        return response()->json(['status' => "success", 'response' => $users_get]);
         return $users_get;
     }
+
     public function boxPage()
     {
         return view('box_page');
     }
+
+    public function saveClassLucky(Request $request)
+    {
+        $masuk_query[] =
+            [
+                'created_at' => now(),
+                'updated_at' => now(),
+                'kelas' => $request->kelas,
+                'detail' => json_encode($request->detail)
+            ];
+
+        DB::table('lucky')->insert($masuk_query);
+        if ($request->ajax()) {
+            $lucky = DB::table('lucky')
+                ->select('lucky.*')
+                ->get();
+
+            return json_encode($lucky);
+        }
+
+    }
+//    public function saveClassLucky(Request $request)
+//    {
+//        $masuk_query[] =
+//            [
+//                'created_at' => now(),
+//                'updated_at' => now(),
+//                'kelas' => $request->kelas,
+//                'detail' => json_encode($request->detail)
+//            ];
+//
+//        DB::table('lucky')->insert($masuk_query);
+//        if ($request->ajax()) {
+//            return json_encode($request->detail);
+//        }
+//
+//    }
 
 }

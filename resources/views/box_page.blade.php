@@ -5,27 +5,27 @@
 
 @endsection
 @section('content')
-<style>
-    .modal {
-        text-align: center;
-        padding: 0!important;
-    }
+    <style>
+        .modal {
+            text-align: center;
+            padding: 0 !important;
+        }
 
-    .modal:before {
-        content: '';
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-        margin-right: -4px;
-    }
+        .modal:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -4px;
+        }
 
-    .modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-    }
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
 
-</style>
+    </style>
     <div class="content">
         <div class="row">
             <div class="col-md-4">
@@ -42,9 +42,12 @@
                                            placeholder="Pelajaran"/>
                                     <div class="input-group">
                                         <span class="input-group-btn">
-                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();" style="margin-left: -10px;">Upload</span>
+                                            <span class="btn btn-primary"
+                                                  onclick="$(this).parent().find('input[type=file]').click();"
+                                                  style="margin-left: -10px;">Upload</span>
                                                 <input onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());encodeImageFileAsURL(this)"
-                                                name="file" style="margin-top: 10px;display: none;" type="file" accept="image/*">
+                                                       name="file" style="margin-top: 10px;display: none;" type="file"
+                                                       accept="image/*">
                                         </span>
                                         <span class="form-control" style="margin-top: 10px;"></span>
                                         <style>
@@ -106,19 +109,19 @@
         </div>
 
     </div>
-{{--    <div class="hover_bkgr_fricc" style="background: transparent">--}}
-{{--        <span class="helper"></span>--}}
-{{--        <div style="position: relative">--}}
-{{--            <div class="popupCloseButton">&times;</div>--}}
-{{--            <span style="width:100%;height:100%;position: absolute;top: 0;left: 0px;justify-content: center;flex-direction: column;align-items: center;display: flex;font-size: 30px;">--}}
-{{--            <p style="background: white;" id="pop-up-text"></p>--}}
-{{--            </span>--}}
+    {{--    <div class="hover_bkgr_fricc" style="background: transparent">--}}
+    {{--        <span class="helper"></span>--}}
+    {{--        <div style="position: relative">--}}
+    {{--            <div class="popupCloseButton">&times;</div>--}}
+    {{--            <span style="width:100%;height:100%;position: absolute;top: 0;left: 0px;justify-content: center;flex-direction: column;align-items: center;display: flex;font-size: 30px;">--}}
+    {{--            <p style="background: white;" id="pop-up-text"></p>--}}
+    {{--            </span>--}}
 
-{{--        </div>--}}
-{{--    </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 
     <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="false">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document" style="    min-width: 95%;">
             <div class="modal-content">
                 <div class="modal-body">
                     <p style="text-align: center;font-weight: bold;font-size: 40px;" id="titledata"></p>
@@ -210,162 +213,163 @@
 
 
             var nomer = $(elem).data('nomer');
-                if (dataarray.data[nomer].status == 0 ) {
-                    var databox = "box_" + nomer;
-                    $("#" + databox).css('cursor', "no-drop");
-                    reviewarray.push(dataarray.data[nomer])
-
-
-                    var color = $(elem).data('color');
-                    dataarray.data[nomer].status = 1
-                    dataarray.data[nomer].color = "#" + color
-                    // $("#")
-                    $('.modal').modal();
-                    $('#titledata').html(dataarray.data[nomer].data);
-                    $('#centerdata').empty();
-                    if(dataarray.data[nomer].filename !=  '' && dataarray.data[nomer].keterangan !=  '') {
-                        $("#centerdata").append("" +
-                            "<div class='row'>" +
-                            "<div class='col-md-8'>" +
-                            "<img src='" + dataarray.data[nomer].filename + "' style='width: -webkit-fill-available;'>" +
-                            "</div>" +
-                            "<div class='col-md-4'>" +
-                            "<p>" + dataarray.data[nomer].keterangan + "</p>" +
-                            "</div>" +
-                            "</div>");
-                    }
-                    if(dataarray.data[nomer].filename !=  '' && dataarray.data[nomer].keterangan ==  '') {
-                        $("#centerdata").append("" +
-                            "<div class='row'>" +
-                            "<div class='col-md-12'>" +
-                            "<img src='" + dataarray.data[nomer].filename + "' style='width: -webkit-fill-available;'>" +
-                            "</div>" +
-                            "</div>");
-                    }
-                    if(dataarray.data[nomer].filename ==  '' && dataarray.data[nomer].keterangan !=  '') {
-                        $("#centerdata").append("" +
-                            "<div class='row'>" +
-                            "<div class='col-md-12' style='text-align:center'>" +
-                            "<p>" + dataarray.data[nomer].keterangan + "</p>" +
-                            "</div>" +
-                            "</div>");
-                    }
-
-                    var tbody = document.getElementById('reviewData');
-                    $("#reviewData").empty();
-                    var no = 0
-                    var data = "";
-                    for (var i = 0; i < reviewarray.length; i++) {
-                        no = i + 1;
-                        // var color = Math.floor(Math.random() * 16777215).toString(16);
-                        /* Must not forget the $ sign */
-                        var boxdata = "boxx_" + i;
-                        if(reviewarray[i].filename !=  '' && reviewarray[i].keterangan !=  '') {
-                            data = "<div class='box' id='" + boxdata + "'" +
-                                "data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' data-status='" + reviewarray[i].status + "' data-color='" + color + "' " +
-                                "style='position: relative;background-color:" + reviewarray[i].color + "'>" +
-                                "<input name='data' type='text' class='form-control' placeholder='Catatan'/>" +
-                                "<div style='margin-top:10px;background-color: #DDD;'> </div>" +
-                                "<div class='row' onclick='getreview(this);' data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' style='display: contents;cursor: pointer;'>" +
-                                "<p style='text-align: center;font-weight: bold;font-size: 20px;' id='titledata'>" + reviewarray[i].data + "</p>" +
-                                "<div class='row'>" +
-                                "<div class='col-md-8'>" +
-                                "<img src='" + reviewarray[i].filename + "' style='width: -webkit-fill-available;'>" +
-                                "</div>" +
-                                "<div class='col-md-4'>" +
-                                "<p>" + reviewarray[i].keterangan + "</p>" +
-                                "</div>" +
-                                "</div>" +
-                                "</div>";
-                        }
-                        if(reviewarray[i].filename ==  '' && reviewarray[i].keterangan !=  '') {
-                            data = "<div class='box' id='" + boxdata + "'" +
-                                "data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' data-status='" + reviewarray[i].status + "' data-color='" + color + "' " +
-                                "style='cursor: pointer;position: relative;background-color:" + reviewarray[i].color + "'>" +
-                                "<input name='data' type='text' class='form-control' placeholder='Catatan'/>" +
-                                "<div style='margin-top:10px;background-color: #DDD;'> </div>" +
-                                "<div class='row' onclick='getreview(this);' data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' style='display: contents;'>" +
-                                "<p style='text-align: center;font-weight: bold;font-size: 20px;' id='titledata'>" + reviewarray[i].data + "</p>" +
-                                "<div class='row'>" +
-                                "<div class='col-md-12' style='text-align:center'>" +
-                                "<p>" + reviewarray[i].keterangan + "</p>" +
-                                "</div>" +
-                                "</div>" +
-                                "</div>";
-                        }
-                        if(reviewarray[i].filename !=  '' && reviewarray[i].keterangan ==  '') {
-                            data = "<div class='box' id='" + boxdata + "'" +
-                                "data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' data-status='" + reviewarray[i].status + "' data-color='" + color + "' " +
-                                "style='cursor: pointer;position: relative;background-color:" + reviewarray[i].color + "'>" +
-                                "<input name='data' type='text' class='form-control' placeholder='Catatan'/>" +
-                                "<div style='margin-top:10px;background-color: #DDD;'> </div>" +
-                                "<div class='row' onclick='getreview(this);' data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' style='display: contents;'>" +
-                                "<p style='text-align: center;font-weight: bold;font-size: 20px;' id='titledata'>" + reviewarray[i].data + "</p>" +
-                                "<div class='row'>" +
-                                "<div class='col-md-12'>" +
-                                "<img src='" + reviewarray[i].filename + "' style='width: -webkit-fill-available;'>" +
-                                "</div>" +
-                                "</div>" +
-                                "</div>";
-                        }
-                        if(reviewarray[i].filename ==  '' && reviewarray[i].keterangan ==  '') {
-                            data = "<div class='box' id='" + boxdata + "'" +
-                                "data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' data-status='" + reviewarray[i].status + "' data-color='" + color + "' " +
-                                "style='cursor: pointer;position: relative;background-color:" + reviewarray[i].color + "'>" +
-                                "<input name='data' type='text' class='form-control' placeholder='Catatan'/>" +
-                                "<div style='margin-top:10px;background-color: #DDD;'> </div>" +
-                                "<div class='row' onclick='getreview(this);' data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' style='display: contents;'>" +
-                                "<p style='text-align: center;font-weight: bold;font-size: 20px;' id='titledata'>" + reviewarray[i].data + "</p>" +
-                                "</div>";
-                        }
-
-                        /* We add the table row to the table body */
-                        tbody.innerHTML += data;
-                        if (no == reviewarray.length) {
-                            var clientHeight = document.getElementById('reviewData').clientHeight
-                            $("section").css('height', parseInt(clientHeight + 40) + "px");
-                            $("section").css('display', "block");
-                            $(".box").css('transform', "scale(1.0)");
-                        }
-                    }
-                }
-                else {
-                    alert("Data Sudah Terpilih")
-                }
-
-        }
-        function getreview(elem) {
-            var nomer = $(elem).data('nomer');
+            console.log(dataarray.data[nomer])
+            if (dataarray.data[nomer].status == 0) {
+                var databox = "box_" + nomer;
+                $("#" + databox).css('cursor', "no-drop");
+                reviewarray.push(dataarray.data[nomer])
+                var color = $(elem).data('color');
+                dataarray.data[nomer].status = 1
+                dataarray.data[nomer].color = "#" + color
+                // $("#")
                 $('.modal').modal();
-                $('#titledata').html(reviewarray[nomer].data);
+                $('#titledata').empty();
+                $('#titledata').html(dataarray.data[nomer].data);
                 $('#centerdata').empty();
-                if (reviewarray[nomer].filename != '' && reviewarray[nomer].keterangan != '') {
+                if (dataarray.data[nomer].filename != '' && dataarray.data[nomer].keterangan != '') {
                     $("#centerdata").append("" +
                         "<div class='row'>" +
                         "<div class='col-md-8'>" +
-                        "<img src='" + reviewarray[nomer].filename + "' style='width: -webkit-fill-available;'>" +
+                        "<img src='" + dataarray.data[nomer].filename + "' style='width: -webkit-fill-available;'>" +
                         "</div>" +
                         "<div class='col-md-4'>" +
-                        "<p>" + reviewarray[nomer].keterangan + "</p>" +
+                        "<p>" + dataarray.data[nomer].keterangan + "</p>" +
                         "</div>" +
                         "</div>");
                 }
-                if (reviewarray[nomer].filename != '' && reviewarray[nomer].keterangan == '') {
+                if (dataarray.data[nomer].filename != '' && dataarray.data[nomer].keterangan == '') {
                     $("#centerdata").append("" +
                         "<div class='row'>" +
                         "<div class='col-md-12'>" +
-                        "<img src='" + reviewarray[nomer].filename + "' style='width: -webkit-fill-available;'>" +
+                        "<img src='" + dataarray.data[nomer].filename + "' style='width: -webkit-fill-available;'>" +
                         "</div>" +
                         "</div>");
                 }
-                if (reviewarray[nomer].filename == '' && reviewarray[nomer].keterangan != '') {
+                if (dataarray.data[nomer].filename == '' && dataarray.data[nomer].keterangan != '') {
                     $("#centerdata").append("" +
                         "<div class='row'>" +
                         "<div class='col-md-12' style='text-align:center'>" +
-                        "<p>" + reviewarray[nomer].keterangan + "</p>" +
+                        "<p>" + dataarray.data[nomer].keterangan + "</p>" +
                         "</div>" +
                         "</div>");
                 }
+
+                var tbody = document.getElementById('reviewData');
+                $("#reviewData").empty();
+                var no = 0
+                var data = "";
+                for (var i = 0; i < reviewarray.length; i++) {
+                    no = i + 1;
+                    // var color = Math.floor(Math.random() * 16777215).toString(16);
+                    /* Must not forget the $ sign */
+                    var boxdata = "boxx_" + i;
+                    if (reviewarray[i].filename != '' && reviewarray[i].keterangan != '') {
+                        data = "<div class='box' id='" + boxdata + "'" +
+                            "data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' data-status='" + reviewarray[i].status + "' data-color='" + color + "' " +
+                            "style='position: relative;background-color:" + reviewarray[i].color + "'>" +
+                            "<input name='data' type='text' class='form-control' placeholder='Catatan'/>" +
+                            "<div style='margin-top:10px;background-color: #DDD;'> </div>" +
+                            "<div class='row' onclick='getreview(this);' data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' style='display: contents;cursor: pointer;'>" +
+                            "<p style='text-align: center;font-weight: bold;font-size: 20px;' id='titledata2'>" + reviewarray[i].data + "</p>" +
+                            "<div class='row'>" +
+                            "<div class='col-md-8'>" +
+                            "<img src='" + reviewarray[i].filename + "' style='width: -webkit-fill-available;'>" +
+                            "</div>" +
+                            "<div class='col-md-4'>" +
+                            "<p>" + reviewarray[i].keterangan + "</p>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>";
+                    }
+                    if (reviewarray[i].filename == '' && reviewarray[i].keterangan != '') {
+                        data = "<div class='box' id='" + boxdata + "'" +
+                            "data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' data-status='" + reviewarray[i].status + "' data-color='" + color + "' " +
+                            "style='position: relative;background-color:" + reviewarray[i].color + "'>" +
+                            "<input name='data' type='text' class='form-control' placeholder='Catatan'/>" +
+                            "<div style='margin-top:10px;background-color: #DDD;' > </div>" +
+                            "<div class='row' onclick='getreview(this);' data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' style='cursor: pointer;display: contents;'>" +
+                            "<p style='text-align: center;font-weight: bold;font-size: 20px;' id='titledata2'>" + reviewarray[i].data + "</p>" +
+                            "<div class='row'>" +
+                            "<div class='col-md-12' style='text-align:center'>" +
+                            "<p>" + reviewarray[i].keterangan + "</p>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>";
+                    }
+                    if (reviewarray[i].filename != '' && reviewarray[i].keterangan == '') {
+                        data = "<div class='box' id='" + boxdata + "'" +
+                            "data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' data-status='" + reviewarray[i].status + "' data-color='" + color + "' " +
+                            "style='position: relative;background-color:" + reviewarray[i].color + "'>" +
+                            "<input name='data' type='text' class='form-control' placeholder='Catatan'/>" +
+                            "<div style='margin-top:10px;background-color: #DDD;'> </div>" +
+                            "<div class='row' onclick='getreview(this);' data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' style='cursor: pointer;display: contents;'>" +
+                            "<p style='text-align: center;font-weight: bold;font-size: 20px;' id='titledata2'>" + reviewarray[i].data + "</p>" +
+                            "<div class='row'>" +
+                            "<div class='col-md-12'>" +
+                            "<img src='" + reviewarray[i].filename + "' style='width: -webkit-fill-available;'>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>";
+                    }
+                    if (reviewarray[i].filename == '' && reviewarray[i].keterangan == '') {
+                        data = "<div class='box' id='" + boxdata + "'" +
+                            "data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' data-status='" + reviewarray[i].status + "' data-color='" + color + "' " +
+                            "style='position: relative;background-color:" + reviewarray[i].color + "'>" +
+                            "<input name='data' type='text' class='form-control' placeholder='Catatan'/>" +
+                            "<div style='margin-top:10px;background-color: #DDD;'> </div>" +
+                            "<div class='row' onclick='getreview(this);' data-id='" + reviewarray[i].data + "' data-nomer='" + i + "' style='cursor: pointer;display: contents;'>" +
+                            "<p style='text-align: center;font-weight: bold;font-size: 20px;' id='titledata2'>" + reviewarray[i].data + "</p>" +
+                            "</div>";
+                    }
+
+                    /* We add the table row to the table body */
+                    tbody.innerHTML += data;
+                    if (no == reviewarray.length) {
+                        var clientHeight = document.getElementById('reviewData').clientHeight
+                        $("section").css('height', parseInt(clientHeight + 40) + "px");
+                        $("section").css('display', "block");
+                        $(".box").css('transform', "scale(1.0)");
+                    }
+                }
+            } else {
+                alert("Data Sudah Terpilih")
+            }
+
+        }
+
+        function getreview(elem) {
+            var nomer = $(elem).data('nomer');
+            $('.modal').modal();
+            $('#titledata').empty();
+            $('#titledata').html(reviewarray[nomer].data);
+            $('#centerdata').empty();
+            if (reviewarray[nomer].filename != '' && reviewarray[nomer].keterangan != '') {
+                $("#centerdata").append("" +
+                    "<div class='row'>" +
+                    "<div class='col-md-8'>" +
+                    "<img src='" + reviewarray[nomer].filename + "' style='width: -webkit-fill-available;'>" +
+                    "</div>" +
+                    "<div class='col-md-4'>" +
+                    "<p>" + reviewarray[nomer].keterangan + "</p>" +
+                    "</div>" +
+                    "</div>");
+            }
+            if (reviewarray[nomer].filename != '' && reviewarray[nomer].keterangan == '') {
+                $("#centerdata").append("" +
+                    "<div class='row'>" +
+                    "<div class='col-md-12'>" +
+                    "<img src='" + reviewarray[nomer].filename + "' style='width: -webkit-fill-available;'>" +
+                    "</div>" +
+                    "</div>");
+            }
+            if (reviewarray[nomer].filename == '' && reviewarray[nomer].keterangan != '') {
+                $("#centerdata").append("" +
+                    "<div class='row'>" +
+                    "<div class='col-md-12' style='text-align:center'>" +
+                    "<p>" + reviewarray[nomer].keterangan + "</p>" +
+                    "</div>" +
+                    "</div>");
+            }
         }
 
         function encodeImageFileAsURL(element) {
@@ -374,8 +378,8 @@
             var file = element.files[0];
             var reader = new FileReader();
             reader.onloadend = function () {
-                document.querySelector('input[name="'+newStr+'"]').value = reader.result;
-            console.log(reader.result)
+                document.querySelector('input[name="' + newStr + '"]').value = reader.result;
+                console.log(reader.result)
             }
             reader.readAsDataURL(file);
         }

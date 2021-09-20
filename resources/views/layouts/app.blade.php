@@ -6,7 +6,6 @@
 </head>
 
 <body class="page-header-fixed">
-
     @include('partials.analytics')
 
     <!-- <div class="page-header navbar navbar-fixed-top">
