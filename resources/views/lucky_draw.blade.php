@@ -15,8 +15,10 @@
                                                           data-toggle="tab">Bentuk Kelompok</a></li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Pilih
                         Kelompok</a></li>
-                <li role="presentation"><a href="#hasil" aria-controls="hasil" role="tab" data-toggle="tab">Hasil
+                <li role="presentation"><a href="#hasil" aria-controls="hasil" role="tab" data-toggle="tab">Hasil Bentuk
                         Kelompok</a></li>
+                <li role="presentation"><a href="#hasil-pilih" aria-controls="hasil-pilih" role="tab" data-toggle="tab">Hasil
+                        Pilih Kelompok</a></li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -86,13 +88,15 @@
 
                 </div>
                 <div role="tabpanel" class="tab-pane" id="profile">
-
-
                     <div class="content">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <label for="name">Kelas</label>
+                                        <input name="kelas" type="text" class="form-control" id="kelas_pilih"
+                                               aria-describedby="Kelas"
+                                               placeholder="Kelas"/>
                                         <label for="name">Data</label>
                                         <textarea id="post-texttab2" class="form-control" rows="4"
                                                   placeholder="Nama Mahasiswa" required name="mahasiswatab2"></textarea><br>
@@ -111,35 +115,12 @@
                                     <div class="col-md-3">
                                         <button type="button" class="btn btn-icon btn-primary" id="SaveDatatab2">
                                             <i data-feather="plus" class="me-25"></i>
-                                            <span>Simpan</span>
+                                            <span>Simpan & lanjut</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <table cellpadding="0" cellspacing="0" border="0">
-                                    <tr>
-                                        <td>
-                                            <div class="power_controls">
-                                                <br/>
-                                                <img id="spin_buttontab2" src="spin_off.png" alt="Spin"
-                                                     onClick="startSpintab2();"
-                                                     style="cursor: pointer"/>
-                                            </div>
-                                        </td>
-                                        <td height="582" class="the_wheel" align="center" valign="center">
-                                            <canvas id="canvastab2" width="434" height="434">
-                                                <p style="{color: white}" align="center">Sorry, your browser doesn't
-                                                    support canvas. Please
-                                                    try another.</p>
-                                            </canvas>
-                                        </td>
 
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="table-datatab2">
                         </div>
                     </div>
                 </div>
@@ -159,6 +140,10 @@
                                     <button type="button" class="btn btn-icon btn-primary" id="SaveDatahasil">
                                         <i data-feather="plus" class="me-25"></i>
                                         <span>Lihat</span>
+                                    </button>
+                                    <button type="button" class="btn btn-icon btn-danger" id="DeleteData">
+                                        <i data-feather="plus" class="me-25"></i>
+                                        <span>Hapus</span>
                                     </button>
 
                                 </div>
@@ -191,7 +176,67 @@
 
                     </div>
                     <div class="row">
-                        <div class="table-data">
+                        <div class="table-data" style="overflow-x: hidden;">
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="hasil-pilih">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-xs-9 form-group">
+                                    <label for="name">Kelas</label>
+                                    <select type="text" name="kelas_data_pilih" class="form-control"
+                                            id="kelas_data_pilih"
+                                            style="min-height: 36px;">
+                                        <option value="">Pilih Kelas</option>
+                                        @foreach($lucky2 as $row)
+                                            <option value="{{$row->detail}}">{{$row->kelas}}</option>
+                                        @endforeach
+                                    </select>
+                                    <button type="button" class="btn btn-icon btn-primary" id="SaveDatahasilpilih">
+                                        <i data-feather="plus" class="me-25"></i>
+                                        <span>Lihat</span>
+                                    </button>
+                                    <button type="button" class="btn btn-icon btn-danger" id="DeleteDataPilih">
+                                        <i data-feather="plus" class="me-25"></i>
+                                        <span>Hapus</span>
+                                    </button>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-8">
+                            <div class="col-md-8">
+                                <table cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td>
+                                            <div class="power_controls">
+                                                <br/>
+                                                <img id="spin_buttontab2" src="spin_off.png" alt="Spin"
+                                                     onClick="startSpintab2();"
+                                                     style="cursor: pointer"/>
+                                            </div>
+                                        </td>
+                                        <td height="582" class="the_wheel" align="center" valign="center">
+                                            <canvas id="canvastab2" width="434" height="434">
+                                                <p style="{color: white}" align="center">Sorry, your browser doesn't
+                                                    support canvas. Please
+                                                    try another.</p>
+                                            </canvas>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="table-datatab2" style="overflow-x: hidden;">
                         </div>
                     </div>
                 </div>
@@ -241,9 +286,9 @@
         ]
         var lengthDraw = luckdraw.length;
         if (lengthDraw <= 10) {
-            var textsize = 15
+            var textsize = 10
         } else {
-            var textsize = 12
+            var textsize = 10
         }
         let data_user = '';
         let data_user_tabel = [];
@@ -372,9 +417,9 @@
                     luckdraw.splice(i, 1);
                     lengthDraw = luckdraw.length;
                     if (lengthDraw <= 10) {
-                        textsize = 15
+                        textsize = 10
                     } else {
-                        textsize = 12
+                        textsize = 10
                     }
                     winwheel()
 
@@ -442,14 +487,14 @@
                 if ($('#kelas').val() == null || $('#kelas').val() == '') {
                     alert('Tambahkan Kelas Terlebih Dahulu');
                 } else {
-
-
-                    var route = "/create-class-by-lucky";
+                    var route = "./create-class-by-lucky";
                     $.ajax({
                         type: 'POST',
                         url: route,
                         data: {
                             kelas: $('#kelas').val(),
+                            jenis: 0,
+                            jml_kel: 0,
                             detail: dataarray
                         },
                         success: function (data) {
@@ -472,6 +517,147 @@
             }
 
         });
+        $('#DeleteData').click(function () {
+            // console.log($("#kelas_data option:selected").text());
+            $(".table-data").html("");
+            luckdraw = [
+                {'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16), 'text': 'Lara'},
+                {'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16), 'text': 'Quiz'},
+                {'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16), 'text': 'Lucky'},
+                {'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16), 'text': 'Draw'},
+            ]
+            lengthDraw = luckdraw.length;
+            if (lengthDraw <= 10) {
+                textsize = 10
+            } else {
+                textsize = 10
+            }
+            winwheel()
+            if ($('#kelas_data').val() == null || $('#kelas_data').val() == '') {
+                alert('Tambahkan Kelas Terlebih Dahulu');
+            } else {
+                var r = confirm("Apakah Anda yakin Hapus Data");
+                if (r == true) {
+                    var route = "./delete-class-by-lucky";
+                    $.ajax({
+                        type: 'POST',
+                        url: route,
+                        data: {
+                            kelas: $("#kelas_data option:selected").text(),
+                            jml_kel: 0,
+                        },
+                        success: function (data) {
+                            // alert(data[1]);
+                            // you can check for status here
+                            var foreach = JSON.parse(data)
+                            $('#kelas_data').empty()
+                            $('#kelas_data').append("<option value=''>Pilih Kelas</option>")
+                            for (let i = 0; i < foreach.length; i++) {
+                                $('#kelas_data').append("<option value='" + foreach[i].detail + "'>" + foreach[i].kelas + "</option>")
+                            }
+                            alert('Delete Data Berhasil');
+                            // $('.nav-tabs a[href="#hasil"]').tab('show');
+                        },
+                        error: function (XMLHttpRequest) {
+                            // toastr.error('Something Went Wrong !');
+                        }
+                    });
+
+                }
+            }
+
+        });
+        $('#DeleteDataPilih').click(function () {
+            var cekdata = $('#kelas_data_pilih').val()
+            cekdata = JSON.parse(cekdata)
+            $(".table-datatab2").html("");
+            luckdrawtab2 = [
+                {'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16), 'text': 'Lara'},
+                {'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16), 'text': 'Quiz'},
+                {'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16), 'text': 'Lucky'},
+                {'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16), 'text': 'Draw'},
+            ]
+            lengthDrawtab2 = luckdrawtab2.length;
+            if (lengthDrawtab2 <= 10) {
+                textsizetab2 = 10
+            } else {
+                textsizetab2 = 10
+            }
+            winwheeltab2()
+            if ($('#kelas_data_pilih').val() == null || $('#kelas_data_pilih').val() == '') {
+                alert('Tambahkan Kelas Terlebih Dahulu');
+            } else {
+                var r = confirm("Apakah Anda yakin Hapus Data");
+                if (r == true) {
+                    var route = "./delete-class-by-lucky";
+                    $.ajax({
+                        type: 'POST',
+                        url: route,
+                        data: {
+                            kelas: $("#kelas_data_pilih option:selected").text(),
+                            jml_kel: cekdata[0].jml_kel,
+                        },
+                        success: function (data) {
+                            // alert(data[1]);
+                            // you can check for status here
+                            var foreach = JSON.parse(data)
+                            $('#kelas_data_pilih').empty()
+                            $('#kelas_data_pilih').append("<option value=''>Pilih Kelas</option>")
+                            for (let i = 0; i < foreach.length; i++) {
+                                $('#kelas_data_pilih').append("<option value='" + foreach[i].detail + "'>" + foreach[i].kelas + "</option>")
+                            }
+                            alert('Delete Data Berhasil');
+                            // $('.nav-tabs a[href="#hasil"]').tab('show');
+                        },
+                        error: function (XMLHttpRequest) {
+                            // toastr.error('Something Went Wrong !');
+                        }
+                    });
+
+                }
+            }
+
+        });
+        $('#SaveDatahasilpilih').click(function () {
+            if ($('#kelas_data_pilih').val() == '') {
+                alert("Pilih Kelas Terlebih Dahulu")
+            } else {
+                var cekdata = $('#kelas_data_pilih').val()
+                cekdata = JSON.parse(cekdata)
+                var count_kelompoktab2 = cekdata[0].jml_kel;
+
+                $(".table-datatab2").html("");
+                var resulttab2 = makeTabletab2(count_kelompoktab2);
+                $(".table-datatab2").append(resulttab2);
+                // dataarray.data = dataarray.data.sort(() => Math.random() - 0.5)
+
+                var data = $('#kelas_data_pilih').val()
+                dataarraytab2 = JSON.parse(data)
+                if (count_kelompoktab2 != 0) {
+                    luckdrawtab2 = [];
+                    cek_input_classtab2 = true;
+                    data_usertab2 = dataarraytab2
+                }
+
+
+                var cek_jmltab2 = dataarraytab2.length - 1;
+                for (let i = 0; i < dataarraytab2.length; i++) {
+                    luckdrawtab2.push({
+                        'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16),
+                        'text': dataarraytab2[i].data
+                    });
+                    if (i == cek_jmltab2) {
+                        lengthDrawtab2 = luckdrawtab2.length;
+                        if (lengthDrawtab2 <= 10) {
+                            textsizetab2 = 10
+                        } else {
+                            textsizetab2 = 10
+                        }
+                        winwheeltab2()
+                    }
+                }
+            }
+        })
         $('#SaveDatahasil').click(function () {
             if ($('#kelas_data').val() == '') {
                 alert("Pilih Kelas Terlebih Dahulu")
@@ -509,9 +695,9 @@
                     if (i == cek_jml) {
                         lengthDraw = luckdraw.length;
                         if (lengthDraw <= 10) {
-                            textsize = 15
+                            textsize = 10
                         } else {
-                            textsize = 12
+                            textsize = 10
                         }
                         winwheel()
                     }
@@ -523,14 +709,6 @@
         });
 
         $(document).ready(function () {
-
-            // $(".table-data").html("");
-
-            /*this function makes a table of size numRow and
-                  num data. it then gives each data element
-                  */
-
-
             //starting area
             $('.data-repeater').repeater({
                 defaultValues: {
@@ -629,9 +807,9 @@
         ]
         var lengthDrawtab2 = luckdrawtab2.length;
         if (lengthDrawtab2 <= 10) {
-            var textsizetab2 = 15
+            var textsizetab2 = 10
         } else {
-            var textsizetab2 = 12
+            var textsizetab2 = 10
         }
         let data_usertab2 = '';
         let data_user_tabeltab2 = [];
@@ -712,8 +890,11 @@
 
         function alertPrizetab2(indicatedSegment) {
             var countspintab2 = selectspintab2 + 1;
-
-            if (countspintab2 > $('#jml_kel').val()) {
+            var cekdata = $('#kelas_data_pilih').val()
+            cekdata = JSON.parse(cekdata)
+            var count_kelompoktab2 = cekdata[0].jml_kel;
+            console.log(count_kelompoktab2)
+            if (countspintab2 > count_kelompoktab2) {
                 selectspintab2 = 0
                 var x = document.getElementById("show_no_tab2" + selectspintab2);
                 x.style.display = "block";
@@ -764,9 +945,9 @@
                     luckdrawtab2.splice(i, 1);
                     lengthDrawtab2 = luckdrawtab2.length;
                     if (lengthDrawtab2 <= 10) {
-                        textsizetab2 = 15
+                        textsizetab2 = 10
                     } else {
-                        textsizetab2 = 12
+                        textsizetab2 = 10
                     }
                     winwheeltab2()
                     return false;
@@ -813,11 +994,6 @@
         $('#SaveDatatab2').click(function () {
             var dataarraytab22 = $('#post-texttab2').val().split(/\n/g)
             var dataarraytab2 = []
-            dataarraytab22.forEach(myFunction);
-
-            function myFunction(item, index) {
-                dataarraytab2.push({data: item, status: 0})
-            }
 
             // console.log(datamahasiswa)
             // var dataarraytab2 = $('.data-repeatertab2').repeaterVal()
@@ -828,32 +1004,42 @@
                 if (dataarraytab2.data == "") {
                     alert('Tambahkan Data Terlebih Dahulu.');
                 } else {
-                    var count_kelompoktab2 = $('#jml_kel').val()
-                    $(".table-datatab2").html("");
-                    var resulttab2 = makeTabletab2(count_kelompoktab2);
-                    $(".table-datatab2").append(resulttab2);
-                    // dataarray.data = dataarray.data.sort(() => Math.random() - 0.5)
-                    if (dataarraytab2.length != 0) {
-                        luckdrawtab2 = [];
-                        cek_input_classtab2 = true;
-                        data_usertab2 = dataarraytab2
+                    dataarraytab22.forEach(myFunction);
+
+                    function myFunction(item, index) {
+                        dataarraytab2.push({data: item, status: 0, jml_kel: $('#jml_kel').val()})
                     }
-                    var cek_jmltab2 = dataarraytab2.length - 1;
-                    for (let i = 0; i < dataarraytab2.length; i++) {
-                        luckdrawtab2.push({
-                            'fillStyle': '#' + Math.floor(Math.random() * 16777215).toString(16),
-                            'text': dataarraytab2[i].data
-                        });
-                        if (i == cek_jmltab2) {
-                            lengthDrawtab2 = luckdrawtab2.length;
-                            if (lengthDrawtab2 <= 10) {
-                                textsizetab2 = 15
-                            } else {
-                                textsizetab2 = 12
+
+                    if ($('#kelas_pilih').val() == null || $('#kelas_pilih').val() == '') {
+                        alert('Tambahkan Kelas Terlebih Dahulu');
+                    } else {
+                        var route = "./create-class-by-lucky";
+                        $.ajax({
+                            type: 'POST',
+                            url: route,
+                            data: {
+                                kelas: $('#kelas_pilih').val(),
+                                jenis: 1,
+                                jml_kel: $('#jml_kel').val(),
+                                detail: dataarraytab2
+                            },
+                            success: function (data) {
+                                // alert(data[1]);
+                                // you can check for status here
+                                var foreach = JSON.parse(data)
+                                $('#kelas_data_pilih').empty()
+                                $('#kelas_data_pilih').append("<option value=''>Pilih Kelas</option>")
+                                for (let i = 0; i < foreach.length; i++) {
+                                    $('#kelas_data_pilih').append("<option value='" + foreach[i].detail + "'>" + foreach[i].kelas + "</option>")
+                                }
+                                $('.nav-tabs a[href="#hasil-pilih"]').tab('show');
+                            },
+                            error: function (XMLHttpRequest) {
+                                // toastr.error('Something Went Wrong !');
                             }
-                            winwheeltab2()
-                        }
+                        });
                     }
+
                 }
             }
         });

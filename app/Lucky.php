@@ -17,7 +17,7 @@ class Lucky extends Model
 {
     use SoftDeletes;
     protected $table = 'lucky';
-    protected $fillable = ['kelas', 'detail'];
+    protected $fillable = ['kelas', 'detail','jenis','jml_kel'];
     
 
     /**

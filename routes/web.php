@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/box_page', 'HomeController@boxPage')->name('box_page');
     Route::get('/get-users-by-class/{id}', 'HomeController@getUsersByClass');
     Route::post('/create-class-by-lucky', 'HomeController@saveClassLucky');
+    Route::post('/delete-class-by-lucky', 'HomeController@destroyLucky');
     Route::resource('uploads', 'UploadsController');
     Route::post('upload_mass_destroy', ['uses' => 'UploadsController@massDestroy', 'as' => 'upload.mass_destroy']);
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Lucky;
 use App\UserAction;
 use Auth;
 use App\Question;
@@ -82,11 +83,17 @@ class HomeController extends Controller
 
     public function luckyDraw()
     {
-
         $lucky = DB::table('lucky')
             ->select('lucky.*')
+            ->where('jenis', 0)
+            ->whereNull('deleted_at')
             ->get();
-        return view('lucky_draw', compact('lucky'));
+        $lucky2 = DB::table('lucky')
+            ->select('lucky.*')
+            ->where('jenis', 1)
+            ->whereNull('deleted_at')
+            ->get();
+        return view('lucky_draw', compact('lucky','lucky2'));
     }
 
     public function getUsersByClass($id)
@@ -112,6 +119,8 @@ class HomeController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
                 'kelas' => $request->kelas,
+                'jml_kel' => $request->jml_kel,
+                'jenis' => $request->jenis,
                 'detail' => json_encode($request->detail)
             ];
 
@@ -119,27 +128,27 @@ class HomeController extends Controller
         if ($request->ajax()) {
             $lucky = DB::table('lucky')
                 ->select('lucky.*')
+                ->where('jenis', $request->jenis)
+                ->whereNull('deleted_at')
                 ->get();
 
             return json_encode($lucky);
         }
-
     }
-//    public function saveClassLucky(Request $request)
-//    {
-//        $masuk_query[] =
-//            [
-//                'created_at' => now(),
-//                'updated_at' => now(),
-//                'kelas' => $request->kelas,
-//                'detail' => json_encode($request->detail)
-//            ];
-//
-//        DB::table('lucky')->insert($masuk_query);
-//        if ($request->ajax()) {
-//            return json_encode($request->detail);
-//        }
-//
-//    }
+        public function destroyLucky(Request $request)
+    {
+        $flight = Lucky::where('kelas', $request->kelas)->where('jml_kel', $request->jml_kel)->first();
+        $question = Lucky::findOrFail($flight->id);
+        $question->delete();
+        if ($request->ajax()) {
+            $lucky = DB::table('lucky')
+                ->select('lucky.*')
+                ->whereNull('deleted_at')
+                ->where('jenis', $flight->jenis)
+                ->get();
+
+            return json_encode($lucky);
+        }
+    }
 
 }
