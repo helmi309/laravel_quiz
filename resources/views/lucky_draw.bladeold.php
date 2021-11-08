@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="./main.css" type="text/css"/>
     <script type="text/javascript" src="./Winwheel.js"></script>
     <script src="./TweenMax.js"></script>
-
 @endsection
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -13,9 +12,13 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
-                                                          data-toggle="tab">Masukkan Kelompok</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Bentuk Kelompok</a></li>
-                <li role="presentation"><a href="#hasil" aria-controls="hasil" role="tab" data-toggle="tab" style="color: red;">Roda Adrenalin (Undian)</a></li>
+                                                          data-toggle="tab">Bentuk Kelompok</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Pilih
+                        Kelompok</a></li>
+                <li role="presentation"><a href="#hasil" aria-controls="hasil" role="tab" data-toggle="tab">Hasil Bentuk
+                        Kelompok</a></li>
+                <li role="presentation"><a href="#hasil-pilih" aria-controls="hasil-pilih" role="tab" data-toggle="tab">Hasil
+                        Pilih Kelompok</a></li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -110,7 +113,7 @@
                                 </div>
                                 <div class="row" style="margin-top: 20px; ">
                                     <div class="col-md-3">
-                                        <button type="button" class="btn btn-icon btn-warning" id="SaveDatatab2">
+                                        <button type="button" class="btn btn-icon btn-primary" id="SaveDatatab2">
                                             <i data-feather="plus" class="me-25"></i>
                                             <span>Simpan</span>
                                         </button>
@@ -209,6 +212,42 @@
                         </div>
                     </div>
                 </div>
+{{--                <div role="tabpanel" class="tab-pane" id="hasil-pilih">--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-4">--}}
+{{--                            <div class="row" style="margin-top: 10px;">--}}
+{{--                                <div class="col-xs-9 form-group">--}}
+{{--                                    <label for="name">Kelas</label>--}}
+{{--                                    <select type="text" name="kelas_data_pilih" class="form-control"--}}
+{{--                                            id="kelas_data_pilih"--}}
+{{--                                            style="min-height: 36px;">--}}
+{{--                                        <option value="">Pilih Kelas</option>--}}
+{{--                                        @foreach($lucky2 as $row)--}}
+{{--                                            <option value="{{$row->detail}}">{{$row->kelas}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                    <button type="button" class="btn btn-icon btn-primary" id="SaveDatahasilpilih">--}}
+{{--                                        <i data-feather="plus" class="me-25"></i>--}}
+{{--                                        <span>Lihat</span>--}}
+{{--                                    </button>--}}
+{{--                                    <button type="button" class="btn btn-icon btn-danger" id="DeleteDataPilih">--}}
+{{--                                        <i data-feather="plus" class="me-25"></i>--}}
+{{--                                        <span>Hapus</span>--}}
+{{--                                    </button>--}}
+
+
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                        </div>--}}
+
+
+{{--                    </div>--}}
+{{--                    --}}{{--                    <div class="row">--}}
+{{--                    --}}{{--                        <div class="table-datatab2" style="overflow-x: hidden;">--}}
+{{--                    --}}{{--                        </div>--}}
+{{--                    --}}{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
@@ -593,7 +632,6 @@
             } else {
                 var cekdata = $('#kelas_data_pilih').val()
                 cekdata = JSON.parse(cekdata)
-
                 var count_kelompoktab2 = cekdata[0].jml_kel;
 
                 $(".table-datatab2").html("");
@@ -636,7 +674,6 @@
 
                 var data = $('#kelas_data').val()
                 dataarray = JSON.parse(data)
-                console.log(dataarray)
                 selectspin = 0
                 data_user_tabel = [];
                 $(".table-data").html("");
@@ -651,9 +688,7 @@
                 }
                 var cek_jml = dataarray.data.length - 1;
                 for (let i = 0; i < dataarray.data.length; i++) {
-                    var datamahasiswa = dataarray.data[i].mahasiswa.split(/\n/g).join(',').split('/').join(',').split(',')
-                    // var datamahasiswa = dataarray.data[i].mahasiswa.split(/\n/g)
-                    console.log(datamahasiswa)
+                    var datamahasiswa = dataarray.data[i].mahasiswa.split(/\n/g)
                     dataarray.data[i].row = []
                     datamahasiswa.forEach(myFunction);
 
@@ -753,7 +788,6 @@
         }
     </script>
     <script>
-        var outputdata = {data:[]}
         var selectspintab2 = 0;
 
         function validate(evt) {
@@ -806,7 +840,7 @@
                 'animation':           // Specify the animation to use.
                     {
                         'type': 'spinToStop',
-                        'duration': 1,    // Duration in seconds.
+                        'duration': 10,    // Duration in seconds.
                         'spins': 3,     // Default number of complete spins.
                         'callbackFinished': alertPrizetab2,
                         'callbackSound': playSoundtab2,   // Function to call when the tick sound is to be triggered.
@@ -873,7 +907,6 @@
 
             if (indicatedSegment != null) {
                 var countspintab2 = selectspintab2 + 1;
-                var dataarraytab2final = {data:[]}
                 if (countspintab2 > $('#jml_kel').val()) {
                     selectspintab2 = 0
                     var x = document.getElementById("show_no_tab2" + selectspintab2);
@@ -885,11 +918,6 @@
                     data_user_tabeltab2.push(resultObjecttab2)
                     var notab2 = 0;
                     for (var i = 0; i < data_user_tabeltab2.length; i++) {
-                        if(luckdrawtab2.length == 1){
-                            var databaru = parseInt(data_user_tabeltab2[i].tabel) + parseInt(1)
-                            dataarraytab2final.data.push({data: databaru, mahasiswa:data_user_tabeltab2[i].data})
-                        }
-
                         if (data_user_tabeltab2[i].tabel == selectspintab2) {
                             notab2 = notab2 + 1;
                             var tr = "<tr>";
@@ -900,8 +928,7 @@
                         }
                     }
                     selectspintab2 = 1
-                }
-                else {
+                } else {
                     var x = document.getElementById("show_no_tab2" + selectspintab2);
                     x.style.display = "block";
                     $("#table_no_tab2" + selectspintab2).empty();
@@ -911,14 +938,8 @@
                     data_user_tabeltab2.push(resultObjecttab2)
                     var notab2 = 0
                     for (var i = 0; i < data_user_tabeltab2.length; i++) {
-                        if(luckdrawtab2.length == 1){
-                            var databaru = parseInt(data_user_tabeltab2[i].tabel) + parseInt(1)
-                            dataarraytab2final.data.push({data: databaru, mahasiswa:data_user_tabeltab2[i].data})
-                        }
-
                         if (data_user_tabeltab2[i].tabel == selectspintab2) {
                             notab2 = notab2 + 1;
-
                             if (data_user_tabeltab2[i].status == 1) {
                                 var tr = "<tr style='background: red'>";
                             } else {
@@ -932,30 +953,6 @@
                     }
                     selectspintab2 = parseInt(selectspintab2 + 1);
                 }
-                if(luckdrawtab2.length == 1){
-                    console.log(dataarraytab2final)
-                    console.log(dataarraytab2final.data)
-
-                    dataarraytab2final.data.forEach(function(item) {
-                        var existing = outputdata.data.filter(function(v, i) {
-                            return v.data == item.data;
-                        });
-                        if (existing.length) {
-                            var existingIndex = outputdata.data.indexOf(existing[0]);
-                            outputdata.data[existingIndex].mahasiswa = outputdata.data[existingIndex].mahasiswa.concat(item.mahasiswa);
-                        } else {
-                            if (typeof item.mahasiswa == 'string')
-                                item.mahasiswa = [item.mahasiswa];
-                            outputdata.data.push(item);
-                        }
-                    });
-                    for (var i = 0; i < outputdata.data.length; i++) {
-                        var arr = outputdata.data[i].mahasiswa;
-                        outputdata.data[i].mahasiswa = arr.join('/');
-                    }
-
-                }
-
                 $.each(luckdrawtab2, function (i) {
                     if (luckdrawtab2[i].text === indicatedSegment.text) {
                         luckdrawtab2.splice(i, 1);
@@ -1064,7 +1061,6 @@
             var count = 0;
             for (var i = 0; i < num; i++) {
                 count = i + 1;
-
                 //for each row
                 var idtable = "table_no_tab2" + i;
                 var idshowbutton = "show_no_tab2" + i;
@@ -1164,20 +1160,20 @@
                             url: route,
                             data: {
                                 kelas: $('#kelas_pilih').val(),
-                                jenis: 0,
+                                jenis: 1,
                                 jml_kel: $('#jml_kel').val(),
-                                detail: outputdata
+                                detail: dataarraytab2
                             },
                             success: function (data) {
                                 // alert(data[1]);
                                 // you can check for status here
                                 var foreach = JSON.parse(data)
-                                $('#kelas_data').empty()
-                                $('#kelas_data').append("<option value=''>Pilih Kelas</option>")
+                                $('#kelas_data_pilih').empty()
+                                $('#kelas_data_pilih').append("<option value=''>Pilih Kelas</option>")
                                 for (let i = 0; i < foreach.length; i++) {
-                                    $('#kelas_data').append("<option value='" + foreach[i].detail + "'>" + foreach[i].kelas + "</option>")
+                                    $('#kelas_data_pilih').append("<option value='" + foreach[i].detail + "'>" + foreach[i].kelas + "</option>")
                                 }
-                                $('.nav-tabs a[href="#hasil"]').tab('show');
+                                $('.nav-tabs a[href="#hasil-pilih"]').tab('show');
                             },
                             error: function (XMLHttpRequest) {
                                 // toastr.error('Something Went Wrong !');
